@@ -1,0 +1,170 @@
+{% extends 'main.html' %}
+
+{% load crispy_forms_tags %}
+{% load quantity_filter %}
+
+{% block content %}
+
+<section class=" py-4 ">
+
+    <div class="container wow fadeIn ">
+        <!-- Heading -->
+
+        <!--Grid row-->
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-8 mb-4" style="max-width: 600px; margin: 3rem auto;">
+
+
+                <form id="payment-form" method="POST" action=".">
+                    <h2 class="mt-5 mb-4 ">Payment</h2>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="card-element">
+                            Credit or Debit card
+                        </label>
+                        <div id="card-element">
+                            <!-- Stripe card element will be inserted here -->
+                        </div>
+                        <div id="card-errors" role="alert"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="submit_payment">Pay</button>
+
+                </form>
+
+            </div>
+            <!--Grid column-->
+
+
+            <!--Grid column-->
+            <div class="col-md-4 my-4 mt-5">
+
+                <!-- Heading -->
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart</span>
+                    <span class="badge badge-secondary badge-pill">{{request.user|cart_items_quantity}}</span>
+                </h4>
+
+                <!-- Cart -->
+                <ul class="list-group mb-3 z-depth-1">
+                    {% for order_item in order.items.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center lh-condensed py-3">
+                        <div>
+                            <h6 class="my-0 ">{{order_item.item.title}} <span>({{order_item.quantity}})</span></h6>
+                        </div>
+                        <span>{{order_item.quantity}} x {% if order_item.item.discount_price%}
+                            {{order_item.item.discount_price}}$ {% else %}
+                            {{order_item.item.price}}$ {% endif %}</span>
+
+                        <span>{{order_item.get_final_price}}$</span>
+                    </li>
+                    {% endfor %}
+
+                    {% if order.has_redeemed %}
+                    <strike>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total (USD)</span>
+                            <strong>{{order.grand_total}}$</strong>
+                        </li>
+                    </strike>
+                    {% endif %}
+
+                    {% if not has_redeemed %}
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-success">
+                            <h6 class="my-0">Promo code</h6>
+                            <small>EXAMPLECODE</small>
+                        </div>
+                        <span class="text-success">5% discount</span>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item d-flex justify-content-between lh-condensed py-3">
+                        <div>
+                            <h6 class="my-0 text-success">Redeem Code Discount</h6>
+                            <span>Applied: 5% off</span>
+                        </div>
+                        <span>-{{ discount_amount }}$</span>
+                    </li>
+                    {% endif %}
+
+                    {% if order.has_redeemed %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>{{order.grand_total_with_redeem}}$</strong>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>{{order.grand_total}}$</strong>
+                    </li>
+                    {% endif %}
+                </ul>
+                <!-- Cart -->
+
+                <!-- Promo code -->
+                {% if not has_redeemed %}
+                <form method="POST" action="{% url 'store:redeem-code' %}">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Promo code" name="redeem_code"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary btn-md waves-effect m-0" type="submit"
+                                name="submit_redeem">Redeem</button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <p class=" mt-2 p-1 bg-success text-light text-center">You have already redeemed the promo code!</p>
+                {% endif %}
+                <!-- Promo code -->
+
+            </div>
+            <!--Grid column-->
+
+
+        </div>
+        <!--Grid row-->
+
+    </div>
+
+</section>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var stripe = Stripe("pk_test_51MdBBmFcMDC8B0YFocGPkK0HCZ3sinLsmQTfmiVWjTbtxnKDJ8urom5dIrhuibrWVMk7sljsqMCrMo4lnsKg2UT900JUNTJ0dn");
+        var elements = stripe.elements();
+
+        var cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        var errorElement = document.getElementById('card-errors');
+
+        var form = document.getElementById('payment-form');
+        var submitButton = document.getElementById('submit-button');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            stripe.createToken(cardElement).then(function (result) {
+                if (result.error) {
+                    errorElement.textContent = result.error.message;
+                } else {
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+            form.submit();
+        }
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="pt-5 container ">
+
+    <h3 class="text-center mb-4 blue-text">Your order has been successfully placed.</h3>
+    <h5 class="text-center mt-3">Order ID#{{order.order_id}}</h5>
+    <h4>Ordered Items:</h4>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in ordered_items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.item.title }}</td>
+                    <td>{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h4 class="text-center my-3">Delivery Time: 3 days</h4>
+    <p class="text-center lead my-1">
+        <strong>Payment Details:</strong><br>
+        <span>Paid: via Card</span><br>
+        <span>Payment Date: {{ order.payment.timestamp }}</span><br>
+        <span><strong>Amount Paid: {% if order.has_redeemed %} ${{ order.grand_total_with_redeem }} {% else %}
+                ${{order.grand_total}} {% endif %} </strong></span>
+    </p>
+    <p class="text-center lead  mb-1 mt-4"><strong>Delivery Address: {{order.billing_address.address}}</strong></p>
+    <p class="text-center lead my-1"><strong>Reciever: {{order.user.username.capitalize}}</strong></p>
+    <p class="text-center my-3 pb-5">Instructions: {% if order.billing_address.instructions %}
+        {{order.billing_address.instructions}} {% else %} none {% endif %}</p>
+
+</div>
+
+
+{% endblock content %}

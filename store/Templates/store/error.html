@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center mt-5">
+            <h1 class="display-4 text-dark">Oops! Page Not Found</h1>
+            <p class="lead text-dark">We couldn't find the page you were looking for.</p>
+            <p class="text-dark">Please check the URL or go back to the <a href="{% url 'store:home' %}"
+                    class="text-dark">homepage</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

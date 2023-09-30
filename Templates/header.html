@@ -1,0 +1,119 @@
+{% load quantity_filter %}
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container ">
+
+        <!-- Brand -->
+        <a class="navbar-brand waves-effect" href="{% url 'store:home' %}">
+            <strong class="blue-text">Codewear</strong>
+        </a>
+
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: space-between;">
+
+            <!-- Left -->
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect" href="{% url 'store:home' %}">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect" href="{% url 'store:home' %}">Products</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect" href="{% url 'store:home' %}">About </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect" href="{% url 'store:home' %}">FAQs</a>
+                </li>
+            </ul>
+
+            <!-- Right -->
+            <ul class="navbar-nav nav-flex-icons">
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    {% if not order.payment %}
+                    <a class="nav-link waves-effect" href="{% url 'store:order-summary' %}">
+                        <span class="badge red z-depth-1 mr-1"> {{request.user|cart_items_quantity}} </span>
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                    </a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if not order %}
+                    <span class="nav-link text-muted">Checkout</span>
+                    {% elif order and not order.billing_address %}
+                    <a class="nav-link waves-effect" href="{% url 'store:checkout' %}">Checkout</a>
+                    {% elif order and order.items.count > 0 and order.billing_address and not order.payment %}
+                    <a class="nav-link waves-effect" href="{% url 'store:payment' %}">Payment</a>
+                    {% elif order.payment %}
+                    <a href="{% url 'store:success' %}" class="nav-link waves-effect active-order-link">
+                        <p class="loading-text">Your order</p>
+                        <div class="loading-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                    {% endif %}
+                </li>
+                <li class="nav-item ">
+                    <button type="button" class="nav-link waves-effect" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Logout
+                    </button>
+                </li>
+                <li class="nav-item ">
+                    <span class="nav-link " style="font-weight: 500 !important;padding-left: 0.5rem; ">
+                        {% if request.user.is_superuser %}
+                        @admin {% else %} @{{request.user.username}}
+                        {% endif %}</span>
+                </li>
+                {% else %}
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect" href="{% url 'store:login' %}">
+                        <span class="clear-fix d-none d-sm-inline-block">Login</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect" href="{% url 'store:register' %}">
+                        <span class="clear-fix d-none d-sm-inline-block">Signup</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+<!-- Navbar -->
+
+<!-- Logout Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class=" fs-5" id="exampleModalLabel">Logout Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-3 lead">Are you sure you want to logout?</p>
+                <small class="  text-black">*Logging out won't affect any current orders. You can
+                    always come back and
+                    continue where you left off.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancle</button>
+                <a href="{% url 'store:logout' %}" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>

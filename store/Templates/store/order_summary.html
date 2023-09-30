@@ -1,0 +1,100 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<!--Main layout-->
+<div class="container " style="padding-top: 5rem !important;">
+
+    <div class="table-responsive text-nowrap">
+        <h2>Order Summary</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item Title</th>
+                    <th scope="col">Original Price</th>
+                    <th scope="col">Discounted Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Overall Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order_item in order.items.all %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a href="{{order_item.item.get_absolute_url}}"
+                            style="text-decoration: none;">{{order_item.item.title}}</a></td>
+                    <td>{{order_item.item.price}}$</td>
+
+                    <td>{% if order_item.item.discount_price %} {{order_item.item.discount_price}}$
+                        {% else %} --
+                        {% endif %}
+                    </td>
+
+                    <td><a href="{% url 'store:decrease-from-cart' order_item.item.slug %}"><i
+                                class="fas fa-minus px-2 text-danger"></i></a><strong>{{order_item.quantity}}</strong>
+                        <a href="{% url 'store:add-to-cart' order_item.item.slug %}"><i
+                                class="fas fa-plus px-2 text-success"></i></a>
+                    </td>
+                    <td>
+                        {% if order_item.item.discount_price %}
+                        {{order_item.get_discounted_price}}$ <span
+                            class="badge badge-secondary mt-0 p-1 mb-2 mx-2">Saving:
+                            {{order_item.get_amount_save}}$</span>
+                        {% else %}
+                        {{order_item.get_total_item_price}}$
+                        {% endif %}
+
+
+                    </td>
+                    <td class="text-start"><a href="{% url 'store:remove-from-cart' order_item.item.slug %}"><i
+                                class="fas fa-trash float-right text-danger "></i></a></td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan='5'>
+                        <p style="font-size: 17px; font-weight: 500;">Your cart is empty</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4"><b>Total</b> </td>
+                    {% if order.has_redeemed %}
+                    <td>
+
+                        <b><strike>{{order.grand_total}}$</strike></b>
+                        <b>{{order.grand_total_with_redeem}}$ <span class="text-success">(redeemed)</span></b>
+                    </td>
+                    {% else %}
+                    <td><b>{{order.grand_total}}$</b> </td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        {%if order.billing_address %}
+                        <a class="btn btn-warning float-right ml-2" href="{% url 'store:payment' %}">Payment</a>
+                        {% else %}
+                        <a href="{% url 'store:checkout' %}" class="btn btn-warning float-right ml-2">Proceed
+                            To
+                            Checkout</a>
+                        {% endif %}
+                        <a href="/" class="btn btn-primary float-right mx-3 ">Continue Shopping
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<!--Main layout-->
+
+{% endblock content %}

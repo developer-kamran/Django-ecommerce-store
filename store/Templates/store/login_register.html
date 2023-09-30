@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container mt-5 w-50 ">
+
+  {% if page == 'login' %}
+
+  <div class="layout__box">
+
+    <div class="layout__boxHeader">
+      <div class="layout__boxTitle">
+        <h3 class="h3-responsive">Login</h3>
+      </div>
+    </div>
+
+    <div class="layout__body">
+
+      <form class="form" action="" method="POST">
+        {% csrf_token %}
+
+        {% if error_message %}
+        <ul class="errors mt-3 mb-4 px-3">
+          <li class="error">{{ error_message }}</li>
+        </ul>
+        {% endif %}
+        <div class="md-form">
+          <label for="email">Email</label>
+          <input required id="email" name="email" type="text" class="form-control" value="{{ email }}" />
+        </div>
+
+        <div class="md-form">
+          <label for="password">Password</label>
+          <input required id="password" name="password" type="password" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary mb-4 mx-0" type="submit">
+          Login
+        </button>
+      </form>
+
+
+      <div class="auth__action">
+        <p>Haven't signed up yet? <a href="{% url 'store:register' %}">Sign Up</a></p>
+      </div>
+
+    </div>
+
+  </div>
+
+  {% else %}
+
+  <div class="layout__box">
+
+    <div class="layout__boxHeader">
+      <div class="layout__boxTitle">
+        <h3 class="h3-responsive">Register</h3>
+      </div>
+    </div>
+
+    <div class="layout__body">
+
+      <form class="form" action="" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="md-form">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+          <ul class="errors">
+            {% for error in field.errors %}
+            <li class="error">{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <button class="btn btn-primary mb-4 mx-0" type="submit">
+          Register
+        </button>
+      </form>
+
+      <div class="auth__action">
+        <p>Already have an account? <a href="{% url 'store:login' %}">login here</a></p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  {% endif %}
+
+</div>
+{% endblock content %}

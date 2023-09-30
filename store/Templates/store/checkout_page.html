@@ -1,0 +1,104 @@
+{% extends 'main.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section class="grey lighten-3 py-4 pb-5">
+
+  <div class="container wow fadeIn " style="width: 746px !important; ">
+
+    <!-- Heading -->
+    <h2 class="my-4 h2  ">Checkout form</h2>
+
+
+    <!--Card-->
+    <div class="card p-3 " style="border-radius: 10px;">
+
+      <form class="card-body" action="" method="POST">
+        {% csrf_token %}
+
+        <div class="mb-4">
+
+          <!-- Name -->
+          <div class="md-form mb-3">
+            <label for="name">*Name</label>
+            {{form.receiver}}
+          </div>
+
+
+          <!-- Address -->
+          <div class="md-form mb-4">
+            <label for="address">*Address</label>
+            {{form.address}}
+          </div>
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <!-- Country -->
+            <div class="col-lg-4 col-md-12">
+              <label for="country">*Country</label>
+              {{ form.country.as_widget }}
+              <div class="invalid-feedback">
+                *Please select a valid country.
+              </div>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <!-- City -->
+            <div class="col-lg-4 col-md-6">
+              <label for="city">*City</label>
+              {{form.city}}
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid Column -->
+            <!-- Zip Code -->
+            <div class="col-lg-4 col-md-6">
+              <label for="zip">Zip Code</label>
+              {{form.zip}}
+              <div class="invalid-feedback">
+                *Please select a valid zip code.
+              </div>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row -->
+
+          <!-- Phone No -->
+          <div class="md-form mb-5">
+            <label for="phone_no">*Phone no</label>
+            {{form.phone_no}}
+          </div>
+
+          <!-- Save Information -->
+          <div class="custom-control custom-checkbox d-flex justify-content-start gap-3 my-3">
+            <input {% if form.save_info.value %} checked {% endif %} type="checkbox" class="custom-control-input"
+              id="save-info" name="save_info">
+            <label class="custom-control-label mb-1" for="save-info">Save this information for next time</label>
+          </div>
+
+          <!-- Instructions -->
+          <div class="md-form mb-5">
+            <label for="instructions" class="px-3">Special Instructions</label>
+            {{form.instructions}}
+          </div>
+
+        </div>
+
+        <!-- Checkout Button -->
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
+      </form>
+
+    </div>
+    <!--Card-->
+
+  </div>
+
+</section>
+
+{% endblock content %}

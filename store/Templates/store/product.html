@@ -1,0 +1,127 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!--Main layout-->
+
+<div class="container dark-grey-text mt-5 ">
+
+  <!--Grid row-->
+  <div class="row wow fadeIn ">
+
+    <!--Grid column-->
+    <div class="col-md-6 mb-4 d-flex justify-content-center align-items-center">
+
+      <div class="image-container">
+        <img src="{{object.image.url}}" class="img-fluid " alt="" style="height: 400px;">
+      </div>
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-md-6 mb-4">
+
+      <!--Content-->
+      <div class="p-4">
+        <h2>{{object.title}}</h2>
+        <div class="mb-3">
+          <a href="">
+            <span class="badge purple mr-1">{{object.get_category_display}}</span>
+          </a>
+          <a href="">
+            <span class="badge blue mr-1">New</span>
+          </a>
+          <a href="">
+            <span class="badge red mr-1">Bestseller</span>
+          </a>
+        </div>
+
+        <p class="lead">
+
+          {% if object.discount_price %}
+          <span class="mr-1 ">
+            <del>${{object.price}}</del>
+          </span>
+          <strong>${{object.discount_price}}</strong>
+
+          {% else %}
+          <strong>${{object.price}}</strong>
+
+          {% endif %}
+        </p>
+
+        <p class="lead font-weight-bold mb-2">Description</p>
+
+        <p>{{object.description}}</p>
+
+        <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-0 p">Add to cart
+          <i class="fas fa-shopping-cart ml-1"></i>
+        </a>
+        {% if is_in_cart %}
+        <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">Remove from cart
+        </a>
+        {% endif %}
+      </div>
+      <!--Content-->
+
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+
+  <hr>
+
+  <!--Grid row-->
+  <div class="row d-flex justify-content-center wow fadeIn">
+
+    <!--Grid column-->
+    <div class="col-md-6 text-center">
+
+      <h4 class="my-4 h4">Additional information</h4>
+
+      <p>Discover the extraordinary essence of our collection. Dive into the intricate details that make each product
+        exceptional. Uncover the craftsmanship, materials, and features that define our creations. Indulge in a world of
+        unrivaled quality and design.</p>
+
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+
+  <!--Grid row-->
+  <div class="row wow fadeIn">
+
+    <!--Grid column-->
+    <div class="col-lg-4 col-md-12 mb-4">
+
+      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-lg-4 col-md-6 mb-4">
+
+      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-lg-4 col-md-6 mb-4">
+
+      <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+
+</div>
+
+
+{% endblock content %}
