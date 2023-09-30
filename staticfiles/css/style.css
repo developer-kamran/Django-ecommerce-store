@@ -1,0 +1,182 @@
+html,
+body,
+header,
+.carousel {
+    height: 60vh;
+}
+
+@media (max-width: 740px) {
+
+    html,
+    body,
+    header,
+    .carousel {
+        height: 100vh;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 850px) {
+
+    html,
+    body,
+    header,
+    .carousel {
+        height: 100vh;
+    }
+}
+
+#messages {
+    transition: all 0.3s linear;
+}
+
+.notification-container {
+    position: fixed;
+    top     : 5rem;
+    right   : 1rem;
+    z-index : 1000;
+}
+
+.notification {
+    display      : flex;
+    align-items  : center;
+    width        : 400px;
+    padding      : 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.notification__content {
+    flex-grow: 1;
+}
+
+.notification__type {
+    margin     : 0;
+    font-weight: bold;
+}
+
+.notification__message {
+    margin: 0;
+}
+
+.notification__close {
+    cursor   : pointer;
+    font-size: 18px;
+}
+
+.notification--success {
+    color           : #319795;
+    background-color: #e6fffa;
+}
+
+.notification--info {
+    color           : #3182ce;
+    background-color: #ebf8ff;
+}
+
+.notification--warning {
+    color           : #e8ad2c;
+    background-color: #fffbea;
+}
+
+.notification--error {
+    color           : #e53e3e;
+    background-color: #fee2e2;
+}
+
+
+
+
+
+
+.errors {
+    color: red;
+}
+
+.errors .error {
+    margin-top: 5px;
+    font-size : 14px;
+}
+
+
+
+.loading-text {
+    animation    : textAnimation 1s infinite;
+    margin-bottom: 0;
+    display      : inline;
+}
+
+.loading-dots {
+    display: inline-block;
+}
+
+.loading-dots span {
+    display         : inline-block;
+    width           : 4px;
+    height          : 5px;
+    border-radius   : 50%;
+    background-color: #555;
+    animation       : loadingAnimation 1s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+
+@keyframes loadingAnimation {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes textAnimation {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+
+
+.products.card {
+    height: 100%;
+}
+
+.products.card .view.overlay {
+    height: 300px;
+    /* Adjust the value as needed */
+}
+
+.products.card .view.overlay img {
+    object-fit: cover;
+    height    : 100%;
+    width     : 100%;
+}
+
+.products.card-body {
+    max-height: 150px;
+    /* Adjust the value as needed */
+    overflow  : hidden;
+}
