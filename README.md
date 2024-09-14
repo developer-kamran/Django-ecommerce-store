@@ -59,14 +59,20 @@ Welcome to the Django Ecommerce App! This application allows users to purchase p
 
    ```bash
    python manage.py migrate
+   
+7. Create an admin user:
 
-7. Run the development server:
+    ```bash
+    python manage.py createsuperuser
+
+8. Run the development server:
 
    ```bash
    python manage.py runserver
 
 ## Configuration
 
+- **Admin Credentials**: Use the Django admin interface to manage users, products, and orders. To log in as an admin, navigate to `/admin` and use the credentials created with the `createsuperuser` command.
 - **Database**: Set up your PostgreSQL connection using `DATABASE_URL` in the `.env` file.
 - **Stripe**: Add your Stripe secret key to the `STRIPE_SECRET_KEY` environment variable.
 
@@ -77,7 +83,8 @@ Welcome to the Django Ecommerce App! This application allows users to purchase p
 - **Checkout Process**: Add products to the cart, enter billing and shipping details, and pay using Stripe.
 - **Promo Codes**: Apply promotional codes at checkout for discounts.
 - **Order Tracking**: After placing an order, users can track their orders through a timeline displayed on their account page.
-
+- **Admin Dashboard**: Access the Django admin interface at `/admin` to manage the ecommerce system (products, orders, users).
+  
 ## Contributing
 
 Feel free to fork the repository and submit pull requests. Please ensure your contributions adhere to the project's coding standards and guidelines.
