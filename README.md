@@ -82,10 +82,6 @@ Welcome to the Django Ecommerce App! This application allows users to purchase p
 
 Feel free to fork the repository and submit pull requests. Please ensure your contributions adhere to the project's coding standards and guidelines.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 ## Contact
 
-For any inquiries or issues, please reach out to [your-email@example.com](mailto:your-email@example.com).
+For any inquiries or issues, please reach out to [developer.kamraniqbal@gmail.com](developer.kamraniqbal@gmail.com).
