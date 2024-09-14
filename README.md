@@ -22,12 +22,12 @@ Welcome to the Django Ecommerce App! This application allows users to purchase p
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/ecommerce-app.git
+   git clone https://github.com/developer-kamran/ecommerce-app.git
 
 2. Navigate to the project directory:
 
    ```bash
-   cd ecommerce-app
+   cd ecommerce_app
 
 3. Create a virtual environment and activate it:
 
