@@ -1,6 +1,6 @@
-# Ecommerce App
+# Django Ecommerce App
 
-Welcome to the Ecommerce App! This application allows users to purchase products with a seamless checkout experience. It features Stripe payments, promo code functionality, and comprehensive order tracking.
+Welcome to the Django Ecommerce App! This application allows users to purchase products with a seamless checkout experience. It features Stripe payments, promo code functionality, and comprehensive order tracking.
 
 ## Features
 
