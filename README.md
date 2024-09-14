@@ -22,7 +22,7 @@ Welcome to the Django Ecommerce App! This application allows users to purchase p
 1. Clone the repository:
 
    ```bash
-   [git clone https://github.com/developer-kamran/Django-ecommerce-app.git](https://github.com/developer-kamran/Django-ecommerce-store.git)
+   git clone https://github.com/developer-kamran/Django-ecommerce-app.git
 
 2. Navigate to the project directory:
 
